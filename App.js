@@ -1,6 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, FlatList } from 'react-native';
+
+import TodoItem from './components/TodoItem';
 
 export default function App() {
   const [newTodo, setNewTodo] = useState('');
@@ -17,8 +19,10 @@ export default function App() {
     // a snapshot (it is a function), and the following: [...currentTodos, newTodo] will
     // read the array and create a new array and copy the existing values into the new array
     // and the second parameter (newTodo) will be added to the new array.
-    setTodo(currentTodos => [...currentTodos, newTodo]);
+    setTodo(currentTodos => [...currentTodos, { id: Math.random().toString() , title: newTodo }]);
+    console.log(myTodos);
   };
+
 
   return (
     <View style={styles.container}>
@@ -27,7 +31,9 @@ export default function App() {
       
       <Button title="Add Todo" onPress={addTodoHandler}></Button>
 
-      {/* <FlatList /> */}
+      <FlatList data={myTodos} renderItem={itemData => (
+        <TodoItem title={itemData.item.title} />
+      )}/>
     </View>
   );
 }
@@ -35,8 +41,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    marginTop: 100,
   },
+  
 });
