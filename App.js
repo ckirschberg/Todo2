@@ -23,6 +23,11 @@ export default function App() {
     console.log(myTodos);
   };
 
+  const removeTodoItem = ( todoId ) => {
+    setTodo(currentTodos => currentTodos.filter(item => item.id !== todoId));
+  };
+  
+
 
   return (
     <View style={styles.container}>
@@ -32,7 +37,7 @@ export default function App() {
       <Button title="Add Todo" onPress={addTodoHandler}></Button>
 
       <FlatList data={myTodos} renderItem={itemData => (
-        <TodoItem title={itemData.item.title} />
+        <TodoItem title={itemData.item.title} onDelete={removeTodoItem.bind(this, itemData.item.id)}/>
       )}/>
     </View>
   );
